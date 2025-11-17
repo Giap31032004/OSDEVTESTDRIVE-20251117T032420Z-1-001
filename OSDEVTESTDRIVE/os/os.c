@@ -96,7 +96,7 @@ void os_start(){
     systick_init(16000);
     current_process = dequeue(ready_queue);
     if(current_process){
-        start_first_process(current_process -> stack_pointer);
+        start_first_task(current_process -> stack_pointer);
     }
 }
 
@@ -187,17 +187,6 @@ void os_scheduler(void){
         }
         // Nếu prev_process == NULL, nghĩa là đang ở main, không cần switch
         // Nếu prev_process == next_process, cùng task, không cần switch
-    }
-}
-
-void os_start(){
-    systick_init(16000);  // 16MHz / 16000 = 1ms per tick
-    
-    current_process = dequeue(ready_queue);
-    if(current_process){
-        current_process->state = TASK_RUNNING;
-        
-        start_first_task((uint32_t*)current_process->stack_pointer);      
     }
 }
 
